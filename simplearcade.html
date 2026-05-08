@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body style="margin:0;overflow:hidden">
+<canvas id="c"></canvas>
+<script>
+c.width=400;c.height=300
+x=180
+onkeydown=e=>x+=e.keyCode==37?-10:e.keyCode==39?10:0
+setInterval(()=>{
+c.getContext("2d").fillRect(0,0,400,300)
+c.getContext("2d").clearRect(x,260,40,40)
+},30)
+</script>
+</body>
+</html>
