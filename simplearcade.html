@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <html>
-<body style="margin:0;overflow:hidden">
+<body style="margin:0;overflow:hidden;background:black">
 <canvas id="c"></canvas>
+
 <script>
-c.width=400;c.height=300
-x=180
-onkeydown=e=>x+=e.keyCode==37?-10:e.keyCode==39?10:0
+c.width = 400
+c.height = 300
+
+ctx = c.getContext("2d")
+
+x = 180
+enemyX = 0
+score = 0
+gameOver = false
+
+onkeydown = e=>{
+  if(e.keyCode==37) x-=10
+  if(e.keyCode==39) x+=10
+}
+
+function collide(){
+  return enemyX < x+40 &&
+         enemyX+40 > x
+}
+
 setInterval(()=>{
-c.getContext("2d").fillRect(0,0,400,300)
-c.getContext("2d").clearRect(x,260,40,40)
+
+  if(gameOver) return
+
+  ctx.clearRect(0,0,400,300)
+
+  // player
+  ctx.fillStyle="lime"
+  ctx.fillRect(x,260,40,40)
+
+  // enemy
+  ctx.fillStyle="red"
+  ctx.fillRect(enemyX,260,40,40)
+
+  enemyX += 5
+
+  if(enemyX > 400){
+    enemyX = -40
+    score++
+  }
+
+  // score
+  ctx.fillStyle="white"
+  ctx.font="20px Arial"
+  ctx.fillText("Score: "+score,10,20)
+
+  // collision
+  if(collide()){
+    gameOver = true
+    ctx.fillText("GAME OVER",130,150)
+  }
+
 },30)
 </script>
 </body>

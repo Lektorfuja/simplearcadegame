@@ -1,14 +1,12 @@
-let x = 180
-
-function move(keyCode){
-  x += keyCode == 37 ? -10 : keyCode == 39 ? 10 : 0
-  return x
+function collide(playerX, enemyX) {
+  return enemyX < playerX + 40 &&
+         enemyX + 40 > playerX
 }
 
-test("player moves left", () => {
-  expect(move(37)).toBe(170)
+test("collision works correctly", () => {
+  expect(collide(100, 110)).toBe(true)
 })
 
-test("player moves right", () => {
-  expect(move(39)).toBe(180)
+test("no collision works correctly", () => {
+  expect(collide(100, 300)).toBe(false)
 })
